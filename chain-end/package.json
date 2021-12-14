@@ -1,0 +1,8 @@
+{
+  "name": "solidity-nft-showcase_chain-end",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "Austin Fleming",
+  "license": "MIT",
+  "private": true
+}
