@@ -11,6 +11,7 @@
 
 - Convert SVG to base64 [here](https://www.utilities-online.info/base64)
 - View SVGs and optimize [here](https://www.svgviewer.dev/)
+- View an NFT [here](https://nftpreview.0xdev.codes/)
 
 ## Viewing What Was Made
 

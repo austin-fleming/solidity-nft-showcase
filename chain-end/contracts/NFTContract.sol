@@ -7,6 +7,8 @@ import "@openzeppelin/contracts/utils/Counters.sol";
 
 import "hardhat/console.sol";
 
+import {Base64} from "./libraries/Base64.sol";
+
 // Inherit from contract to gain its methods
 // https://solidity-by-example.org/inheritance/
 contract NFTContract is ERC721URIStorage {
@@ -24,7 +26,7 @@ contract NFTContract is ERC721URIStorage {
     string[] wordList = [
         "Milky",
         "Loose",
-        "Idea",
+        "Ideal",
         "Verdant",
         "Point",
         "Wire",
@@ -32,7 +34,7 @@ contract NFTContract is ERC721URIStorage {
         "Pump",
         "Purple",
         "Awesome",
-        "Paltry",
+        "Pantry",
         "Desert",
         "Orca",
         "Chin",
@@ -57,54 +59,93 @@ contract NFTContract is ERC721URIStorage {
         return uint256(keccak256(abi.encodePacked(input)));
     }
 
-    function assembleRandomSVG(uint256 tokenId)
-        public
-        view
-        returns (string memory)
-    {
-        // Seed random with a stringified combination of an arbitrary word and the token ID, then squash into range.
-        uint256 randWordIdx01 = random(
-            string(abi.encodePacked("first", Strings.toString(tokenId)))
-        ) % wordList.length;
-        uint256 randWordIdx02 = random(
-            string(abi.encodePacked("second", Strings.toString(tokenId)))
-        ) % wordList.length;
-        uint256 randWordIdx03 = random(
-            string(abi.encodePacked("third", Strings.toString(tokenId)))
-        ) % wordList.length;
-
-        uint256 randWordColorIdx = random(
-            string(abi.encodePacked("word_color", Strings.toString(tokenId)))
-        ) % wordColors.length;
-        uint256 randBaseColorIdx = random(
-            string(abi.encodePacked("base_color", Strings.toString(tokenId)))
-        ) % baseColors.length;
-
-        return
-            string(
-                abi.encodePacked(
-                    svgStart,
-                    baseColors[randBaseColorIdx],
-                    svgBaseColorEnd,
-                    wordColors[randWordColorIdx],
-                    svgWordColorEnd,
-                    wordList[randWordIdx01],
-                    wordList[randWordIdx02],
-                    wordList[randWordIdx03],
-                    svgEnd
-                )
-            );
-    }
-
     function makeAnNFT() public {
         // Get the current tokenId, starting at 0
         uint256 newItemId = _tokenIds.current();
 
-        string memory finalSvg = assembleRandomSVG(newItemId);
+        // ## BUILD SVG ##
+        // Seed random with a stringified combination of an arbitrary word and the token ID, then squash into range.
+        uint256 randWordIdx01 = random(
+            string(abi.encodePacked("first", Strings.toString(newItemId)))
+        ) % wordList.length;
+        uint256 randWordIdx02 = random(
+            string(abi.encodePacked("second", Strings.toString(newItemId)))
+        ) % wordList.length;
+        uint256 randWordIdx03 = random(
+            string(abi.encodePacked("third", Strings.toString(newItemId)))
+        ) % wordList.length;
+
+        string memory assembledWord = string(
+            abi.encodePacked(
+                wordList[randWordIdx01],
+                wordList[randWordIdx02],
+                wordList[randWordIdx03]
+            )
+        );
+
+        uint256 randWordColorIdx = random(
+            string(abi.encodePacked("word_color", Strings.toString(newItemId)))
+        ) % wordColors.length;
+        uint256 randBaseColorIdx = random(
+            string(abi.encodePacked("base_color", Strings.toString(newItemId)))
+        ) % baseColors.length;
+
+        string memory finalSvg = string(
+            abi.encodePacked(
+                svgStart,
+                baseColors[randBaseColorIdx],
+                svgBaseColorEnd,
+                wordColors[randWordColorIdx],
+                svgWordColorEnd,
+                assembledWord,
+                svgEnd
+            )
+        );
+
+        string memory base64Svg = string(
+            abi.encodePacked(
+                "data:image/svg+xml;base64,",
+                Base64.encode(bytes(finalSvg))
+            )
+        );
 
         console.log("---");
         console.log(finalSvg);
         console.log("---");
+        console.log(base64Svg);
+        console.log("---");
+
+        string
+            memory nftDescription = "A squiggly background with a few select words. May not make a person rich, but sure is fun.";
+
+        string memory json = Base64.encode(
+            bytes(
+                string(
+                    abi.encodePacked(
+                        '{"name":"#',
+                        newItemId,
+                        "_",
+                        assembledWord,
+                        '", "description":"',
+                        nftDescription,
+                        '", "image":"',
+                        base64Svg,
+                        '"}'
+                    )
+                )
+            )
+        );
+
+        string memory finalTokenUri = string(
+            abi.encodePacked("data:application/json;base64,", json)
+        );
+
+        console.log(
+            "Final token URI for NFT #",
+            newItemId,
+            ": ",
+            finalTokenUri
+        );
 
         // Actually min NFT to sender
         // msg.sender is a safe method that prevents someone spoofing an address
@@ -112,7 +153,7 @@ contract NFTContract is ERC721URIStorage {
 
         // Set NFTs data
         // the second argument is a link to a JSON metadata file that follows the ERC721 standard.
-        _setTokenURI(newItemId, "https://jsonkeeper.com/b/9GRB");
+        _setTokenURI(newItemId, finalTokenUri);
 
         console.log(
             "An NFT w/ ID %s has been minted to %s",
