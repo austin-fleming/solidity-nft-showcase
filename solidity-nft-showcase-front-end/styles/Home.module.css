@@ -108,10 +108,16 @@
   border-radius: 0.5em;
   background-color:blue;
 }
+.messagebox a {
+  color: var(--color--03);
+}
 .messagebox--warn {
   color: rgb(54, 50, 14);
   background-color:rgb(255, 253, 139);
   border: 2px solid rgb(54, 50, 14);
+}
+.messagebox--success {
+
 }
 
 /* FOOTER */
@@ -121,5 +127,5 @@
   text-align: center;
 }
 .footer a {
-  color: var(--color--03);
+  color: var(--color--03); /* centralize */
 }
