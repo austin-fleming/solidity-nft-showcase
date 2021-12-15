@@ -1,5 +1,5 @@
 const main = async () => {
-  console.log("#### 🧪 STARTING TEST 🧪 ####");
+  console.log("#### 🚀 STARTING DEPLOY 🚀 ####");
 
   console.group("\nDeploying contract: ");
   const contractFactory = await hre.ethers.getContractFactory("NFTContract"); // compile contract and add export artifacts
@@ -8,17 +8,19 @@ const main = async () => {
   console.log("Contract deployed to:", nftContract.address);
   console.groupEnd();
 
-  console.group("\nCreate NFT:");
+  console.group("\nMinting NFT #1...");
   const txn01 = await nftContract.makeAnNFT();
   await txn01.wait();
+  console.log("minted!");
   console.groupEnd();
 
-  console.group("\nCreate another NFT:");
+  console.group("\nMinting NFT #2...");
   const txn02 = await nftContract.makeAnNFT();
   await txn02.wait();
+  console.log("Minted!");
   console.groupEnd();
 
-  console.log("\n#### ✅ TEST COMPLETE ✅ ####");
+  console.log("\n#### ✅ DEPLOY COMPLETE ✅ ####");
 };
 
 const runMain = async () => {
