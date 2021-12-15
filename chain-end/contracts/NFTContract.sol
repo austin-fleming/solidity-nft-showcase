@@ -102,34 +102,34 @@ contract NFTContract is ERC721URIStorage {
             )
         );
 
-        string memory base64Svg = string(
-            abi.encodePacked(
-                "data:image/svg+xml;base64,",
-                Base64.encode(bytes(finalSvg))
-            )
-        );
-
-        console.log("---");
+        console.log("\n--- Final SVG");
         console.log(finalSvg);
-        console.log("---");
-        console.log(base64Svg);
-        console.log("---");
+        console.log("---\n");
 
         string
             memory nftDescription = "A squiggly background with a few select words. May not make a person rich, but sure is fun.";
 
+        string memory nftName = string(
+            abi.encodePacked(
+                "#",
+                Strings.toString(newItemId),
+                "_",
+                assembledWord
+            )
+        );
+
+        console.log(nftDescription);
+        console.log(nftName);
         string memory json = Base64.encode(
             bytes(
                 string(
                     abi.encodePacked(
-                        '{"name":"#',
-                        newItemId,
-                        "_",
-                        assembledWord,
+                        '{"name":"',
+                        nftName,
                         '", "description":"',
                         nftDescription,
-                        '", "image":"',
-                        base64Svg,
+                        '", "image":"data:image/svg+xml;base64,',
+                        Base64.encode(bytes(finalSvg)),
                         '"}'
                     )
                 )
@@ -140,12 +140,16 @@ contract NFTContract is ERC721URIStorage {
             abi.encodePacked("data:application/json;base64,", json)
         );
 
+        console.log("\n----");
         console.log(
-            "Final token URI for NFT #",
-            newItemId,
-            ": ",
-            finalTokenUri
+            string(
+                abi.encodePacked(
+                    "https://nftpreview.0xdev.codes/?code=",
+                    finalTokenUri
+                )
+            )
         );
+        console.log("----");
 
         // Actually min NFT to sender
         // msg.sender is a safe method that prevents someone spoofing an address
