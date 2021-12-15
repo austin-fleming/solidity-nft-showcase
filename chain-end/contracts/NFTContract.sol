@@ -102,9 +102,9 @@ contract NFTContract is ERC721URIStorage {
             )
         );
 
-        console.log("\n--- Final SVG");
+        /* console.log("\n--- Final SVG");
         console.log(finalSvg);
-        console.log("---\n");
+        console.log("---\n"); */
 
         string
             memory nftDescription = "A squiggly background with a few select words. May not make a person rich, but sure is fun.";
@@ -118,8 +118,6 @@ contract NFTContract is ERC721URIStorage {
             )
         );
 
-        console.log(nftDescription);
-        console.log(nftName);
         string memory json = Base64.encode(
             bytes(
                 string(
@@ -140,7 +138,7 @@ contract NFTContract is ERC721URIStorage {
             abi.encodePacked("data:application/json;base64,", json)
         );
 
-        console.log("\n----");
+        /* console.log("\n----");
         console.log(
             string(
                 abi.encodePacked(
@@ -149,7 +147,7 @@ contract NFTContract is ERC721URIStorage {
                 )
             )
         );
-        console.log("----");
+        console.log("----"); */
 
         // Actually min NFT to sender
         // msg.sender is a safe method that prevents someone spoofing an address
