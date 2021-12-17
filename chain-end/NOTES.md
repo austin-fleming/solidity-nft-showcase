@@ -17,3 +17,7 @@
 
 - Go to: [testnets.opensea.io](https://testnets.opensea.io)
 - Past contract address into search. Don't hit enter, instead click the search bar's dropdown result.
+
+## Examples
+
+- [Completed example contract](https://gist.github.com/farzaa/b3b8ec8aded7e5876b8a1ab786347cc9)

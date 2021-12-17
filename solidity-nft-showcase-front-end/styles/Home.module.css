@@ -61,6 +61,49 @@
   padding: 0 var(--content--padding);
 }
 
+/* SUCCESS MODAL */
+.successModal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  min-height: 100vh;
+
+  background-color: rgba(27, 2, 44, 0.5);
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  padding: var(--content--padding);
+}
+.successModal__box {
+  background-color: var(--color--bg--darker);
+
+  padding: var(--content--padding);
+  border-radius: 0.5em;
+  border: 2px solid var(--color--01);
+
+  max-width: 800px;
+}
+.successModal h1 {
+  font-size: var(--typosize--title-medium);
+  font-weight: var(--fontweight--bold);
+  width: 100%;
+  text-align: center;
+  margin-bottom: 2em;
+}
+.successModal p {
+  text-align: center;
+  margin-bottom: 1.5em;
+}
+.successModal span {
+  display: block;
+  font-weight: var(--fontweight--bold);
+  margin-bottom: .5em;
+}
+
 /* BUTTONS + MESSAGES */
 .btn {
   padding: 1em 2em;
@@ -80,15 +123,15 @@
 
   transition: all 300ms;
 }
+.btn:hover{
+  border: 2px solid var(--color--text--primary);
+}
 .btn--mint {
   color: var(--color--text--primary);
   background: var(--color--01);
   background: linear-gradient(-45deg, var(--color--01) 0%, var(--color--02) 100%);
   border-color: var(--color--01);
   background-repeat: no-repeat;
-}
-.btn--mint:hover {
-  border: 2px solid var(--color--text--primary);
 }
 .btn--connect {
 
@@ -97,6 +140,17 @@
   background: var(--color--01);
   pointer-events: none;
   opacity: 0.75;
+}
+.btn--exit {
+  margin-top: 4em;
+  font-size: var(--typosize--base);
+  padding: .75em 1em;
+
+  color: var(--color--text--primary);
+  background: var(--color--01);
+  background: linear-gradient(-45deg, var(--color--01) 0%, var(--color--02) 100%);
+  border-color: var(--color--01);
+  background-repeat: no-repeat;
 }
 
 .messagebox {

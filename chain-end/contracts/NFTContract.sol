@@ -49,6 +49,8 @@ contract NFTContract is ERC721URIStorage {
     string[] wordColors = ["#5f10f5", "#93faa5", "#0b7fab", "#b7f4d8"];
     string[] baseColors = ["#e76d89", "#fe7968", "#f27935"];
 
+    event NFTMinted(address sender, uint256 tokenid);
+
     // Pass name of NFTs token and it's symbol
     constructor() ERC721("SquareNFT", "SQUARE") {
         console.log("NFT contract.");
@@ -165,5 +167,7 @@ contract NFTContract is ERC721URIStorage {
 
         // Increment counter for next NFT
         _tokenIds.increment();
+
+        emit NFTMinted(msg.sender, newItemId); // sets up a psuedo-webhook. Allows access to the tokenId
     }
 }
