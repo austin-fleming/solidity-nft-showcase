@@ -10,6 +10,11 @@ const TWITTER_LINK = `https://twitter.com/${TWITTER_HANDLE}`;
 const OPENSEA_LINK = "";
 const TOTAL_MINT_COUNT = 50;
 
+/* 
+TODO: Status on mint button. Deactivate after mint starts.
+*/
+
+
 const Container = ({ children }) => (
   <div className={S.container}>{children}</div>
 );
