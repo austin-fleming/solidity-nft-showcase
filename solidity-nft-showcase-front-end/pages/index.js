@@ -273,6 +273,7 @@ const Home = () => {
                 View on{" "}
                 <a
                   target="_blank"
+                  rel="noreferrer"
                   href={`${OPENSEA_LINK}${confirmationDetails.tokenId}`}
                 >
                   OpenSea
